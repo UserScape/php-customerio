@@ -66,7 +66,7 @@ class ApiTest extends TestCase  {
 
         $api = $this->createApi();
 
-        $response = $api->fireEvent($id, $name, $attributes);
+        $response = $api->fireEvent($id, $name, $data);
 
         $this->assertTrue( $response->success() );
     }
