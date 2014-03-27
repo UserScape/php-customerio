@@ -3,6 +3,8 @@ php-customerio
 
 PHP API Integration with Customer.io
 
+[![Build Status](https://travis-ci.org/UserScape/php-customerio.svg?branch=master)](https://travis-ci.org/UserScape/php-customerio)
+
 ## Usage
 
 ```php
