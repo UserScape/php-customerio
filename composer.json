@@ -1,0 +1,19 @@
+{
+    "name": "userscape/customerio",
+    "description": "PHP API for Customer.io",
+    "require": {
+        "guzzle/guzzle": "3.8.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Customerio":"src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fideloper",
+            "email": "fideloper@gmail.com"
+        }
+    ]
+}
