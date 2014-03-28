@@ -1,5 +1,7 @@
 <?php namespace Customerio;
 
+use Guzzle\Http\Exception\RequestException;
+
 class Request {
 
     /**
@@ -42,9 +44,18 @@ class Request {
     {
         $body = array_merge(array('email' => $email), $attributes);
 
-        $response = $this->client->put('/api/v1/customers/'.$id, null, $body, array(
-            'auth' => $this->auth,
-        ))->send();
+        try {
+            $response = $this->client->put('/api/v1/customers/'.$id, null, $body, array(
+                'auth' => $this->auth,
+            ))->send();
+        } catch(RequestException $e)
+        {
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+            } else {
+                return new Response(500, (string)$e->getResponse());
+            }
+        }
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
@@ -56,9 +67,19 @@ class Request {
      */
     public function deleteCustomer($id)
     {
-        $response = $this->client->delete('/api/v1/customers/'.$id, null, null, array(
-            'auth' => $this->auth,
-        ))->send();
+        try {
+            $response = $this->client->delete('/api/v1/customers/'.$id, null, null, array(
+                'auth' => $this->auth,
+            ))->send();
+        }catch(RequestException $e)
+        {
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+            } else {
+                return new Response(500, (string)$e->getResponse());
+            }
+        }
+
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
@@ -74,9 +95,19 @@ class Request {
     {
         $body = array_merge( array('name' => $name), $this->parseData($data) );
 
-        $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
-            'auth' => $this->auth,
-        ))->send();
+        try {
+            $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
+                'auth' => $this->auth,
+            ))->send();
+        }catch(RequestException $e)
+        {
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+            } else {
+                return new Response(500, (string)$e->getResponse());
+            }
+        }
+
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
