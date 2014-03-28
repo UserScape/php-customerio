@@ -3,6 +3,8 @@ php-customerio
 
 PHP API Integration with Customer.io
 
+> "Good enough!"
+
 [![Build Status](https://travis-ci.org/UserScape/php-customerio.svg?branch=master)](https://travis-ci.org/UserScape/php-customerio)
 
 ## Usage
@@ -15,6 +17,9 @@ $result = $api->addCustomer('someid001', 'some@email.com', array('arbitrary-data
 if( $result->success() )
 {
     // Continue on with life    
+} else {
+    // Learn from your mistakes
+    echo $result->message();    
 }
 ```
 
