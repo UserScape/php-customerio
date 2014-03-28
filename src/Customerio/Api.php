@@ -11,7 +11,7 @@ class Api {
     public function __construct($siteId, $apiSecret, Request $request)
     {
         $this->siteId = $siteId;
-        $this->apiSecrete = $apiSecret;
+        $this->apiSecret = $apiSecret;
         $this->request = $request;
     }
 
