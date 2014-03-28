@@ -95,7 +95,9 @@ class ApiTest extends TestCase  {
 
     protected function mockRequest()
     {
-        $stub = $this->getMock('Customerio\Request');
+        $stub = $this->getMockBuilder('Customerio\Request')
+            ->disableOriginalConstructor()
+            ->getMOck();
 
         $stub->expects($this->any())
             ->method('authenticate')
