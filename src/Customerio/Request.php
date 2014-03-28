@@ -50,11 +50,7 @@ class Request {
             ))->send();
         } catch(RequestException $e)
         {
-            if ($e->hasResponse()) {
-                $response = $e->getResponse();
-            } else {
-                return new Response(500, (string)$e->getResponse());
-            }
+            $response = $e->getResponse();
         }
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
@@ -73,11 +69,7 @@ class Request {
             ))->send();
         }catch(RequestException $e)
         {
-            if ($e->hasResponse()) {
-                $response = $e->getResponse();
-            } else {
-                return new Response(500, (string)$e->getResponse());
-            }
+            $response = $e->getResponse();
         }
 
 
@@ -101,11 +93,8 @@ class Request {
             ))->send();
         }catch(RequestException $e)
         {
-            if ($e->hasResponse()) {
-                $response = $e->getResponse();
-            } else {
-                return new Response(500, (string)$e->getResponse());
-            }
+
+            $response = $e->getResponse();
         }
 
 
