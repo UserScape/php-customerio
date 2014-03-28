@@ -3,7 +3,6 @@
 require_once('TestCase.php');
 
 use Customerio\Api;
-use Customerio\Request;
 use Customerio\Response;
 
 class ApiTest extends TestCase  {
@@ -104,15 +103,15 @@ class ApiTest extends TestCase  {
 
         $stub->expects($this->any())
             ->method('customer')
-            ->will($this->returnValue(new Response));
+            ->will($this->returnValue(new Response(200, 'Ok')));
 
         $stub->expects($this->any())
             ->method('deleteCustomer')
-            ->will($this->returnValue(new Response));
+            ->will($this->returnValue(new Response(200, 'Ok')));
 
         $stub->expects($this->any())
             ->method('event')
-            ->will($this->returnValue(new Response));
+            ->will($this->returnValue(new Response(200, 'Ok')));
 
         return $stub;
     }

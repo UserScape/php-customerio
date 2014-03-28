@@ -33,6 +33,5 @@ class Api {
     public function fireEvent($id, $name, $data)
     {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data);
-        return new Response();
     }
 }

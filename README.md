@@ -37,4 +37,10 @@ Fire Event:
 
     fireEvent('someid001', 'event-name' array('arbitrary-value', 3.14));
 
-> All methods return a Response object which contains the method `success()`, returning a boolean
+## Response Object
+
+All methods return a `Response` object which contains the following methods:
+
+    success() // Boolean
+
+    message() // String
