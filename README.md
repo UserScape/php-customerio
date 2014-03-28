@@ -12,14 +12,18 @@ PHP API Integration with Customer.io
 ```php
 $api = new Customerio\Api($siteId, $apiSecret, new Customerio\Request);
 
-$result = $api->createCustomer('someid001', 'some@email.com', array('arbitrary-data' => 'foobarbaz'));
+$response = $api->createCustomer(
+    'someid001',
+    'some@email.com',
+    array('arbitrary-data' => 'foobarbaz')
+);
 
-if( $result->success() )
+if( $response->success() )
 {
-    // Continue on with life    
+    // Continue on with life
 } else {
     // Learn from your mistakes
-    echo $result->message();    
+    echo $response->message();
 }
 ```
 
