@@ -127,7 +127,7 @@ class Request {
 
         foreach( $data as $key => $value)
         {
-            $return['data['.$key.']'] = $value;
+            $parsed['data['.$key.']'] = $value;
         }
 
         return $parsed;
