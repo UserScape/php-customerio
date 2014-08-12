@@ -44,7 +44,7 @@ Delete Customer:
 
 Fire Event:
 
-    fireEvent('someid001', 'event-name' array('arbitrary-value', 3.14));
+    fireEvent('someid001', 'event-name', array('arbitrary-value', 3.14));
 
 ## Response Object
 
