@@ -3,7 +3,7 @@
     "description": "PHP API for Customer.io",
     "keywords": ["customer.io", "customerio", "php customer.io", "php customerio"],
     "require": {
-        "guzzle/guzzle": "3.8.*@dev"
+        "guzzle/guzzle": "3.9.*"
     },
     "autoload": {
         "psr-0": {
