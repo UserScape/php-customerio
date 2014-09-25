@@ -2,6 +2,13 @@
     "name": "userscape/customerio",
     "description": "PHP API for Customer.io",
     "keywords": ["customer.io", "customerio", "php customer.io", "php customerio"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fideloper",
+            "email": "fideloper@gmail.com"
+        }
+    ],
     "require": {
         "guzzle/guzzle": "3.9.*"
     },
@@ -10,11 +17,9 @@
             "Customerio":"src/"
         }
     },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "fideloper",
-            "email": "fideloper@gmail.com"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
         }
-    ]
+    }
 }
