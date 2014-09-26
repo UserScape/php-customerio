@@ -18,8 +18,7 @@ $response = $api->createCustomer(
     array('arbitrary-data' => 'foobarbaz')
 );
 
-if( $response->success() )
-{
+if ($response->success()) {
     // Continue on with life
 } else {
     // Learn from your mistakes
