@@ -48,9 +48,10 @@ class Request {
             $response = $this->client->put('/api/v1/customers/'.$id, null, $body, array(
                 'auth' => $this->auth,
             ))->send();
-        } catch(RequestException $e)
-        {
+        } catch (BadResponseException $e) {
             $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
         }
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
@@ -67,11 +68,11 @@ class Request {
             $response = $this->client->delete('/api/v1/customers/'.$id, null, null, array(
                 'auth' => $this->auth,
             ))->send();
-        }catch(RequestException $e)
-        {
+        } catch (BadResponseException $e) {
             $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
         }
-
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
@@ -91,12 +92,11 @@ class Request {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
                 'auth' => $this->auth,
             ))->send();
-        }catch(RequestException $e)
-        {
-
+        } catch (BadResponseException $e) {
             $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
         }
-
 
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
