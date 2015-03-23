@@ -1,6 +1,7 @@
 <?php namespace Customerio;
 
 use Guzzle\Http\Exception\RequestException;
+use Guzzle\Http\Exception\BadResponseException;
 
 class Request {
 
