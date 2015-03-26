@@ -79,7 +79,7 @@ class Request {
     }
 
     /**
-     * Send and Event to Customer.io
+     * Send a pageview to Customer.io
      * @param $id
      * @param $url
      * @param $referrer
