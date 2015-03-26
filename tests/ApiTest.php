@@ -70,6 +70,21 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testRecordPageview()
+    {
+        $id = $this->getRandomString();
+
+        $url = 'http://' . $this->getRandomString(8) . '.com/';
+
+        $referrer = 'http://' . $this->getRandomString(8) . '.com/';
+
+        $api = $this->createApi();
+
+        $response = $api->recordPageview($id, $url, $referrer);
+
+        $this->assertTrue( $response->success() );
+    }
+
     protected function getEmail()
     {
         return $this->getRandomString(5).'@'.$this->getRandomString(10).'.com';
@@ -113,6 +128,10 @@ class ApiTest extends TestCase  {
 
         $stub->expects($this->any())
             ->method('event')
+            ->will($this->returnValue(new Response(200, 'Ok')));
+
+        $stub->expects($this->any())
+            ->method('pageview')
             ->will($this->returnValue(new Response(200, 'Ok')));
 
         return $stub;

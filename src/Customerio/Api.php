@@ -34,4 +34,9 @@ class Api {
     {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data);
     }
+
+    public function recordPageview($id, $url, $referrer)
+    {
+        return $this->request->authenticate($this->siteId, $this->apiSecret)->pageview($id, $url, $referrer);
+    }
 }
