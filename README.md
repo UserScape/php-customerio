@@ -40,10 +40,13 @@ Delete Customer:
 
     deleteCustomer('someid001');
 
-
 Fire Event:
 
     fireEvent('someid001', 'event-name', array('arbitrary-value', 3.14));
+
+Record Pageview:
+
+    fireEvent('someid001', 'https://www.full-pageview-url.com/', 'https://www.optional-full-referrer-url.com/');
 
 ## Response Object
 
