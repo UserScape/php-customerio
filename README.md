@@ -46,7 +46,7 @@ Fire Event:
 
 Record Pageview:
 
-    fireEvent('someid001', 'https://www.full-pageview-url.com/', 'https://www.optional-full-referrer-url.com/');
+    recordPageview('someid001', 'https://www.full-pageview-url.com/', 'https://www.optional-full-referrer-url.com/');
 
 ## Response Object
 
