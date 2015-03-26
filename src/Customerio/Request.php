@@ -79,6 +79,30 @@ class Request {
     }
 
     /**
+     * Send a pageview to Customer.io
+     * @param $id
+     * @param $url
+     * @param $referrer
+     * @return Response
+     */
+    public function pageview($id, $url, $referrer = '')
+    {
+        $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer' => $referrer ) ) );
+
+        try {
+            $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
+                'auth' => $this->auth,
+            ))->send();
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
+        }
+
+        return new Response($response->getStatusCode(), $response->getReasonPhrase());
+    }
+
+    /**
      * Send and Event to Customer.io
      * @param $id
      * @param $name
