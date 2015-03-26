@@ -87,7 +87,7 @@ class Request {
      */
     public function pageview($id, $url, $referrer = '')
     {
-        $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer', $referrer ) ) );
+        $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer' => $referrer ) ) );
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
