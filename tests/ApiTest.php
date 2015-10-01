@@ -70,6 +70,19 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testFireAnonymousEvent()
+    {
+        $name = $this->getRandomString();
+
+        $data = $this->getAttributes();
+
+        $api = $this->createApi();
+
+        $response = $api->fireAnonymousEvent($name, $data);
+
+        $this->assertTrue( $response->success() );
+    }
+
     public function testRecordPageview()
     {
         $id = $this->getRandomString();
@@ -128,6 +141,10 @@ class ApiTest extends TestCase  {
 
         $stub->expects($this->any())
             ->method('event')
+            ->will($this->returnValue(new Response(200, 'Ok')));
+
+        $stub->expects($this->any())
+            ->method('anonymousEvent')
             ->will($this->returnValue(new Response(200, 'Ok')));
 
         $stub->expects($this->any())
