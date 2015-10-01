@@ -127,6 +127,29 @@ class Request {
     }
 
     /**
+     * Send an Event to Customer.io not associated to any existing Customer.io user
+     * @param $name
+     * @param $data
+     * @return Response
+     */
+    public function anonymousEvent($name, $data)
+    {
+        $body = array_merge( array('name' => $name), $this->parseData($data) );
+
+        try {
+            $response = $this->client->post('/api/v1/events', null, $body, array(
+                'auth' => $this->auth,
+            ))->send();
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
+        }
+
+        return new Response($response->getStatusCode(), $response->getReasonPhrase());
+    }
+
+    /**
      * Set Authentication credentials
      * @param $apiKey
      * @param $apiSecret

@@ -44,6 +44,10 @@ Fire Event:
 
     fireEvent('someid001', 'event-name', array('arbitrary-value', 3.14));
 
+Fire Anonymous Event: (http://customer.io/docs/invitation-emails.html)
+
+    fireAnonymousEvent('event-name', array('arbitrary-value', 3.14));
+
 Record Pageview:
 
     recordPageview('someid001', 'https://www.full-pageview-url.com/', 'https://www.optional-full-referrer-url.com/');
