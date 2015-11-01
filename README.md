@@ -42,11 +42,11 @@ Delete Customer:
 
 Fire Event:
 
-    fireEvent('someid001', 'event-name', array('arbitrary-value', 3.14));
+    fireEvent('someid001', 'event-name', array('arbitrary-value' => 3.14));
 
 Fire Anonymous Event: (http://customer.io/docs/invitation-emails.html)
 
-    fireAnonymousEvent('event-name', array('arbitrary-value', 3.14));
+    fireAnonymousEvent('event-name', array('arbitrary-value' => 3.14));
 
 Record Pageview:
 
