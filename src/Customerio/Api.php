@@ -30,14 +30,14 @@ class Api {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->deleteCustomer($id);
     }
 
-    public function fireEvent($id, $name, $data=array())
+    public function fireEvent($id, $name, $data=array(), $formatJson = false)
     {
-        return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data);
+        return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data, $formatJson);
     }
 
-    public function fireAnonymousEvent($name, $data=array())
+    public function fireAnonymousEvent($name, $data=array(), $formatJson = false)
     {
-        return $this->request->authenticate($this->siteId, $this->apiSecret)->anonymousEvent($name, $data);
+        return $this->request->authenticate($this->siteId, $this->apiSecret)->anonymousEvent($name, $data, $formatJson);
     }
 
     public function recordPageview($id, $url, $referrer)

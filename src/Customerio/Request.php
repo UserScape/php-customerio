@@ -107,9 +107,10 @@ class Request {
      * @param $id
      * @param $name
      * @param $data
+     * @param $formatJson
      * @return Response
      */
-    public function event($id, $name, $data)
+    public function event($id, $name, $data, $formatJson)
     {
         $body = $this->parseData(array('name' => $name, 'data' => $data));
 
@@ -130,11 +131,12 @@ class Request {
      * Send an Event to Customer.io not associated to any existing Customer.io user
      * @param $name
      * @param $data
+     * @param $formatJson
      * @return Response
      */
-    public function anonymousEvent($name, $data)
+    public function anonymousEvent($name, $data, $formatJson)
     {
-        $body = $this->parseData(array('name' => $name, 'data' => $data));
+        $body = $this->parseData(array('name' => $name, 'data' => $data), $formatJson);
 
         try {
             $response = $this->client->post('/api/v1/events', null, $body, array(
@@ -167,28 +169,40 @@ class Request {
      * Parse data as specified by customer.io
      * @link http://customer.io/docs/api/rest.html
      * @param array $data
+     * @param $formatJson
      * @return array
      */
-    protected function parseData(array $data)
+    protected function parseData(array $data, $formatJson)
     {
-        $isAssoc = array_keys($data) !== range(0, count($data) - 1);
-        $parsed = $isAssoc ? '{' : '[';
-        $first = true;
+        if ($formatJson) {
+            $isAssoc = array_keys($data) !== range(0, count($data) - 1);
+            $parsed = $isAssoc ? '{' : '[';
+            $first = true;
 
-        foreach ($data as $key => $value)
-        {
-            if (is_array($value) || is_object($value)) {
-                $value = $this->parseData($value);
-            } else {
-                $value = '"' . $value . '"';
+            foreach ($data as $key => $value)
+            {
+                if (is_array($value) || is_object($value)) {
+                    $value = $this->parseData($value, $formatJson);
+                } else {
+                    $value = '"' . $value . '"';
+                }
+
+                $parsed .= ($first ? '' : ',') . ($isAssoc ? '"' . $key . '":' : '') . $value;
+                
+                $first &= false;
+            }
+            
+            return $parsed . ($isAssoc ? '}' : ']');
+        } else {
+            $parsed = array();
+
+            foreach ($data as $key => $value)
+            {
+                $parsed['data['.$key.']'] = $value;
             }
 
-            $parsed .= ($first ? '' : ',') . ($isAssoc ? '"' . $key . '":' : '') . $value;
-            
-            $first &= false;
+            return $parsed;
         }
-        
-        return $parsed . ($isAssoc ? '}' : ']');
     }
 
 }
