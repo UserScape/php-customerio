@@ -87,7 +87,7 @@ class Request {
      */
     public function pageview($id, $url, $referrer = '')
     {
-        $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer' => $referrer ) ) );
+        $body = $this->parseData(array('name' => $url, 'type' => 'page', 'referrer' => $referrer));
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
@@ -111,7 +111,7 @@ class Request {
      */
     public function event($id, $name, $data)
     {
-        $body = array_merge( array('name' => $name), $this->parseData($data) );
+        $body = $this->parseData(array('name' => $name, 'data' => $data));
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
@@ -134,7 +134,7 @@ class Request {
      */
     public function anonymousEvent($name, $data)
     {
-        $body = array_merge( array('name' => $name), $this->parseData($data) );
+        $body = $this->parseData(array('name' => $name, 'data' => $data));
 
         try {
             $response = $this->client->post('/api/v1/events', null, $body, array(
@@ -171,14 +171,24 @@ class Request {
      */
     protected function parseData(array $data)
     {
-        $parsed = array();
+        $isAssoc = array_keys($data) !== range(0, count($data) - 1);
+        $parsed = $isAssoc ? '{' : '[';
+        $first = true;
 
-        foreach( $data as $key => $value)
+        foreach ($data as $key => $value)
         {
-            $parsed['data['.$key.']'] = $value;
-        }
+            if (is_array($value) || is_object($value)) {
+                $value = $this->parseData($value);
+            } else {
+                $value = '"' . $value . '"';
+            }
 
-        return $parsed;
+            $parsed .= ($first ? '' : ',') . ($isAssoc ? '"' . $key . '":' : '') . $value;
+            
+            $first &= false;
+        }
+        
+        return $parsed . ($isAssoc ? '}' : ']');
     }
 
 }
