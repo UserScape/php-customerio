@@ -112,7 +112,7 @@ class Request {
      */
     public function event($id, $name, $data, $formatJson)
     {
-        $body = $this->parseData(array('name' => $name, 'data' => $data));
+        $body = $this->parseData(array('name' => $name, 'data' => $data), $formatJson);
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
