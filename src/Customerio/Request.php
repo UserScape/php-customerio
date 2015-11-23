@@ -188,20 +188,22 @@ class Request {
                 }
 
                 $parsed .= ($first ? '' : ',') . ($isAssoc ? '"' . $key . '":' : '') . $value;
-                
+
                 $first &= false;
             }
-            
+
             return $parsed . ($isAssoc ? '}' : ']');
         } else {
             $parsed = array();
 
-            foreach ($data as $key => $value)
+            foreach ($data['data'] as $key => $value)
             {
                 $parsed['data['.$key.']'] = $value;
             }
 
-            return $parsed;
+            unset($data['data']);
+
+            return array_merge($data, $parsed);
         }
     }
 
