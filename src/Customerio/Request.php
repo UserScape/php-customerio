@@ -1,13 +1,13 @@
 <?php namespace Customerio;
 
-use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\BadResponseException;
 
 class Request {
 
     /**
      * An HTTP Client
-     * @var \Guzzle\Http\Client
+     * @var \GuzzleHttp\Client
      */
     protected $client;
 
@@ -31,7 +31,9 @@ class Request {
             return;
         }
 
-        $this->client = new \Guzzle\Http\Client('https://track.customer.io');
+        $this->client = new \GuzzleHttp\Client([
+            'base_uri' => 'https://track.customer.io',
+        ]);
     }
 
     /**
@@ -46,9 +48,10 @@ class Request {
         $body = array_merge(array('email' => $email), $attributes);
 
         try {
-            $response = $this->client->put('/api/v1/customers/'.$id, null, $body, array(
+            $response = $this->client->put('/api/v1/customers/'.$id, array(
                 'auth' => $this->auth,
-            ))->send();
+                'json' => $body,
+            ));
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         } catch (RequestException $e) {
@@ -66,9 +69,9 @@ class Request {
     public function deleteCustomer($id)
     {
         try {
-            $response = $this->client->delete('/api/v1/customers/'.$id, null, null, array(
+            $response = $this->client->delete('/api/v1/customers/'.$id, array(
                 'auth' => $this->auth,
-            ))->send();
+            ));
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         } catch (RequestException $e) {
@@ -90,9 +93,10 @@ class Request {
         $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer' => $referrer ) ) );
 
         try {
-            $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
+            $response = $this->client->post('/api/v1/customers/'.$id.'/events', array(
                 'auth' => $this->auth,
-            ))->send();
+                'json' => $body,
+            ));
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         } catch (RequestException $e) {
@@ -114,9 +118,10 @@ class Request {
         $body = array_merge( array('name' => $name), $this->parseData($data) );
 
         try {
-            $response = $this->client->post('/api/v1/customers/'.$id.'/events', null, $body, array(
+            $response = $this->client->post('/api/v1/customers/'.$id.'/events', array(
                 'auth' => $this->auth,
-            ))->send();
+                'json' => $body,
+            ));
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         } catch (RequestException $e) {
@@ -137,9 +142,10 @@ class Request {
         $body = array_merge( array('name' => $name), $this->parseData($data) );
 
         try {
-            $response = $this->client->post('/api/v1/events', null, $body, array(
+            $response = $this->client->post('/api/v1/events', array(
                 'auth' => $this->auth,
-            ))->send();
+                'json' => $body,
+            ));
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         } catch (RequestException $e) {
@@ -171,14 +177,7 @@ class Request {
      */
     protected function parseData(array $data)
     {
-        $parsed = array();
-
-        foreach( $data as $key => $value)
-        {
-            $parsed['data['.$key.']'] = $value;
-        }
-
-        return $parsed;
+        return array('data' => $data);
     }
 
 }
