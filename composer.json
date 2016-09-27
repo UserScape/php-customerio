@@ -10,7 +10,10 @@
         }
     ],
     "require": {
-        "guzzle/guzzle": "3.9.*"
+        "guzzlehttp/guzzle": "6.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.5.*"
     },
     "autoload": {
         "psr-0": {
