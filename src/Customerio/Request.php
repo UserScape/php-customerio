@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\BadResponseException;
+use stdClass;
 
 class Request {
 
@@ -177,6 +178,11 @@ class Request {
      */
     protected function parseData(array $data)
     {
+		if (empty($data))
+		{
+			$data = new stdClass;
+		}
+
         return array('data' => $data);
     }
 
