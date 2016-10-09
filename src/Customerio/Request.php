@@ -180,7 +180,7 @@ class Request {
     {
 		if (empty($data))
 		{
-			$data = new stdClass;
+			$data = new stdClass();
 		}
 
         return array('data' => $data);
