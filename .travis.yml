@@ -9,4 +9,4 @@ php:
 before_script:
   - composer dump-autoload
 
-script: phpunit
+script: vendor/bin/phpunit
