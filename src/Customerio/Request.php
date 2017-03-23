@@ -112,11 +112,16 @@ class Request {
      * @param $id
      * @param $name
      * @param $data
+     * @param $timestamp (optional)
      * @return Response
      */
-    public function event($id, $name, $data)
+    public function event($id, $name, $data, $timestamp)
     {
-        $body = array_merge( array('name' => $name), $this->parseData($data) );
+        if (is_null($timestamp)) {
+            $body = array_merge( array('name' => $name), $this->parseData($data) );
+        } else {
+            $body = array_merge( array('name' => $name, 'timestamp' => $timestamp), $this->parseData($data) );
+        }
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', array(

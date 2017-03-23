@@ -70,6 +70,23 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testFireBacklogEvent()
+    {
+        $id = $this->getRandomString();
+
+        $name = $this->getRandomString();
+
+        $data = $this->getAttributes();
+
+        $timestamp = $this->getTimestamp();
+
+        $api = $this->createApi();
+
+        $response = $api->fireEvent($id, $name, $data, $timestamp);
+
+        $this->assertTrue( $response->success() );
+    }
+
     public function testFireAnonymousEvent()
     {
         $name = $this->getRandomString();
@@ -111,6 +128,12 @@ class ApiTest extends TestCase  {
         return array(
             $key => $value
         );
+    }
+
+    protected function getTimestamp()
+    {
+        $date = new DateTime();
+        return $date->getTimestamp();
     }
 
     protected function createApi()
