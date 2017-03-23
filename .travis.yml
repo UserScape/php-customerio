@@ -6,6 +6,8 @@ php:
   - 7.0
   - hhvm
 
+install: travis_retry composer install --no-interaction --prefer-source
+
 before_script:
   - composer dump-autoload
 
