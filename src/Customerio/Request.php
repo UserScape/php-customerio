@@ -47,6 +47,7 @@ class Request {
     public function customer($id, $email, $attributes)
     {
         $body = array_merge(array('email' => $email), $attributes);
+        $body = http_build_query($body);
 
         try {
             $response = $this->client->put('/api/v1/customers/'.$id, array(
@@ -92,6 +93,7 @@ class Request {
     public function pageview($id, $url, $referrer = '')
     {
         $body = array_merge( array('name' => $url, 'type' => 'page'), $this->parseData( array( 'referrer' => $referrer ) ) );
+        $body = http_build_query($body);
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', array(
@@ -117,6 +119,7 @@ class Request {
     public function event($id, $name, $data)
     {
         $body = array_merge( array('name' => $name), $this->parseData($data) );
+        $body = http_build_query($body);
 
         try {
             $response = $this->client->post('/api/v1/customers/'.$id.'/events', array(
@@ -141,6 +144,7 @@ class Request {
     public function anonymousEvent($name, $data)
     {
         $body = array_merge( array('name' => $name), $this->parseData($data) );
+        $body = http_build_query($body);
 
         try {
             $response = $this->client->post('/api/v1/events', array(
