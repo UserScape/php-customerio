@@ -44,6 +44,10 @@ Fire Event:
 
     fireEvent('someid001', 'event-name', array('arbitrary-value' => 3.14));
 
+Fire Historical Event:
+
+    fireEvent('someid001', 'event-name', array('arbitrary-value' => 3.14), 1420070400);
+
 Fire Anonymous Event: (http://customer.io/docs/invitation-emails.html)
 
     fireAnonymousEvent('event-name', array('arbitrary-value' => 3.14));
