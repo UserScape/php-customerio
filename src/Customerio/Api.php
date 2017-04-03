@@ -30,9 +30,9 @@ class Api {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->deleteCustomer($id);
     }
 
-    public function fireEvent($id, $name, $data=array())
+    public function fireEvent($id, $name, $data=array(), $timestamp=null)
     {
-        return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data);
+        return $this->request->authenticate($this->siteId, $this->apiSecret)->event($id, $name, $data, $timestamp);
     }
 
     public function fireAnonymousEvent($name, $data=array())
