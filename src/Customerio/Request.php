@@ -46,7 +46,9 @@ class Request {
      */
     public function customer($id, $email, $attributes)
     {
-        if (! is_null($email)) {
+        if (is_null($email)) {
+            $body = $attributes;
+        } else {
             $body = array_merge(array('email' => $email), $attributes);
         }
 
@@ -185,10 +187,9 @@ class Request {
      */
     protected function parseData(array $data)
     {
-		if (empty($data))
-		{
-			$data = new stdClass();
-		}
+        if (empty($data)) {
+            $data = new stdClass();
+        }
 
         return array('data' => $data);
     }
