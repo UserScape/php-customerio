@@ -20,7 +20,7 @@ class Api {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->customer($id, $email, $attributes);
     }
 
-    public function updateCustomer($id, $email, $attributes=array())
+    public function updateCustomer($id, $email=null, $attributes=array())
     {
         return $this->createCustomer($id, $email, $attributes);
     }

@@ -46,7 +46,9 @@ class Request {
      */
     public function customer($id, $email, $attributes)
     {
-        $body = array_merge(array('email' => $email), $attributes);
+        if (! is_null($email)) {
+            $body = array_merge(array('email' => $email), $attributes);
+        }
 
         try {
             $response = $this->client->put('/api/v1/customers/'.$id, array(
