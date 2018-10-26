@@ -115,6 +115,17 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testAddToSegment()
+    {
+        $segmentId = $this->getRandomString();
+        $users = [$this->getRandomString(), $this->getRandomString()];
+
+        $api = $this->createApi();
+        $response = $api->addToSegment($segmentId, $users);
+        
+        $this->assertTrue( $response->success() );
+    }
+
     protected function getEmail()
     {
         return $this->getRandomString(5).'@'.$this->getRandomString(10).'.com';
@@ -173,6 +184,10 @@ class ApiTest extends TestCase  {
         $stub->expects($this->any())
             ->method('pageview')
             ->will($this->returnValue(new Response(200, 'Ok')));
+        
+        $stub->expects($this->any())
+            ->method('addToSegment')
+            ->will($this->returnValue(new Response(200, 'OK')));
 
         return $stub;
     }

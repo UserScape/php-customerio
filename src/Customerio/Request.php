@@ -162,6 +162,39 @@ class Request {
     }
 
     /**
+     * @param $segment int
+     * @param $users array
+     * @return Response
+     */
+    public function addToSegment($segment, $users = [])
+    {
+        $body = ['ids' => self::parseIntData($users)];
+
+        try {
+            $response = $this->client->post("/api/v1/segments/$segment/add_customers", [
+                'auth' => $this->auth,
+                'json' => $body,
+            ]);
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        } catch (RequestException $e) {
+            $response = new Response($e->getCode(), $e->getMessage());
+        }
+
+        return new Response($response->getStatusCode(), $response->getReasonPhrase());
+    }
+
+    // Parses int ID values to strings - API fails silently if ints are provided in json body
+    private static function parseIntData($userIds)
+    {
+        foreach ($userIds as $key => $userId) {
+            $userIds[$key] = (string) $userId;
+        }
+
+        return $userIds;
+    }
+
+    /**
      * Set Authentication credentials
      * @param $apiKey
      * @param $apiSecret
