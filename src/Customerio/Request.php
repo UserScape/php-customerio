@@ -161,6 +161,24 @@ class Request {
         return new Response($response->getStatusCode(), $response->getReasonPhrase());
     }
 
+    public function addToSegment($segment, $users = [])
+    {
+        $body = ['ids' => $users];
+
+        try {
+            $response = $this->client->post("/api/v1/segments/$segment/add_customers", [
+                'auth' => $this->auth,
+                'json' => $body,
+            ]);
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        } catch (RequestException $e) {
+            return new Response($e->getCode(), $e->getMessage());
+        }
+
+        return new Response($response->getStatusCode(), $response->getReasonPhrase());
+    }
+
     /**
      * Set Authentication credentials
      * @param $apiKey

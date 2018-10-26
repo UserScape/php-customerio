@@ -44,4 +44,9 @@ class Api {
     {
         return $this->request->authenticate($this->siteId, $this->apiSecret)->pageview($id, $url, $referrer);
     }
+
+    public function addToSegment($segment, array $users = []) 
+    {
+        return $this->request->authenticate($this->siteId, $this->apiSecret)->addToSegment($segment, $users);
+    }
 }
