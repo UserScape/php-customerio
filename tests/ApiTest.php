@@ -126,6 +126,28 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testAddToSegmentFailureBadResponse()
+    {
+        $segmentId = $this->getRandomString();
+        $users = [$this->getRandomString(), $this->getRandomString()];
+
+        $api = $this->createBadApi();
+        $response = $api->addToSegment($segmentId, $users);
+
+        $this->assertFalse($response->success());
+    }
+
+    public function testAddToSegmentFailureBadRequest()
+    {
+        $segmentId = $this->getRandomString();
+        $users = [$this->getRandomString(), $this->getRandomString()];
+
+        $api = $this->createUnauthorisedApi();
+        $response = $api->addToSegment($segmentId, $users);
+
+        $this->assertFalse($response->success());
+    }
+
     protected function getEmail()
     {
         return $this->getRandomString(5).'@'.$this->getRandomString(10).'.com';
@@ -153,6 +175,19 @@ class ApiTest extends TestCase  {
         $apiSecret = $this->getRandomString();
 
         return new Api($siteId, $apiSecret, $this->mockRequest());
+    }
+
+    protected function createBadApi()
+    {
+        $siteId = $this->getRandomString();
+        $apiSecret = $this->getRandomString();
+
+        return new Api($siteId, $apiSecret, $this->mockFailedRequest());
+    }
+
+    protected function createUnauthorisedApi()
+    {
+        return new Api(null, null, $this->mockUnauthorisedRequest());
     }
 
     protected function mockRequest()
@@ -188,6 +223,40 @@ class ApiTest extends TestCase  {
         $stub->expects($this->any())
             ->method('addToSegment')
             ->will($this->returnValue(new Response(200, 'OK')));
+
+        return $stub;
+    }
+
+    protected function mockFailedRequest()
+    {
+        $stub = $this->getMockBuilder('Customerio\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $stub->expects($this->any())
+            ->method('authenticate')
+            ->will($this->returnValue($stub));
+
+        $stub->expects($this->any())
+            ->method('addToSegment')
+            ->will($this->returnValue(new Response(500, 'Internal Server Error')));
+
+        return $stub;
+    }
+
+    protected function mockUnauthorisedRequest()
+    {
+        $stub = $this->getMockBuilder('Customerio\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $stub->expects($this->any())
+            ->method('authenticate')
+            ->will($this->returnValue($stub));
+
+        $stub->expects($this->any())
+            ->method('addToSegment')
+            ->will($this->returnValue(new Response(401, 'Unauthorised')));
 
         return $stub;
     }
