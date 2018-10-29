@@ -56,6 +56,10 @@ Record Pageview:
 
     recordPageview('someid001', 'https://www.full-pageview-url.com/', 'https://www.optional-full-referrer-url.com/');
 
+Add Customers to segment:
+
+    addToSegment('segmentId', ['customerId1', 'customerId2', 'customerId3',...]);
+
 ## Response Object
 
 All methods return a `Response` object which contains the following methods:
