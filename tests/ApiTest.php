@@ -44,6 +44,21 @@ class ApiTest extends TestCase  {
         $this->assertTrue( $response->success() );
     }
 
+    public function testUpdateCustomerWithoutEmail()
+    {
+        // User ID
+        $id = $this->getRandomString();
+
+        // Attributes
+        $attributes = $this->getAttributes();
+
+        $api = $this->createApi();
+
+        $response = $api->updateCustomer($id, null, $attributes);
+
+        $this->assertTrue( $response->success() );
+    }
+
     public function testDeleteCustomer()
     {
         $id = $this->getRandomString();
